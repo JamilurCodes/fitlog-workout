@@ -27,12 +27,7 @@ FitLog is a dark, responsive workout library built with **Next.js App Router**, 
 10. Responsive mobile navigation and DaisyUI-based UI elements.
 
 ## API
+All data: https://api.api-store.workers.dev/api/fitlog
 
-### All workouts
-
-`https://api.abcz.workers.dev/api/fitlog`
-
-### Single workout
-
-`https://api.abcz.workers.dev/api/fitlog/:id`
+Single Data: https://api.api-store.workers.dev/api/fitlog/:id
 
