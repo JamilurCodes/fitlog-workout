@@ -34,34 +34,41 @@ interface FitLogContextValue {
   isDone: (id: number) => boolean;
 }
 
+function readStoredFitLogState(): StoredFitLogState {
+  if (typeof window === "undefined") {
+    return { planIds: [], savedIds: [], doneIds: [] };
+  }
+
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+
+    if (!stored) {
+      return { planIds: [], savedIds: [], doneIds: [] };
+    }
+
+    const parsed = JSON.parse(stored) as Partial<StoredFitLogState>;
+
+    return {
+      planIds: Array.isArray(parsed.planIds) ? parsed.planIds : [],
+      savedIds: Array.isArray(parsed.savedIds) ? parsed.savedIds : [],
+      doneIds: Array.isArray(parsed.doneIds) ? parsed.doneIds : [],
+    };
+  } catch (error) {
+    console.error("Could not restore FitLog data.", error);
+    return { planIds: [], savedIds: [], doneIds: [] };
+  }
+}
+
 const FitLogContext = createContext<FitLogContextValue | undefined>(undefined);
 
 export function FitLogProvider({ children }: { children: ReactNode }) {
-  const [planIds, setPlanIds] = useState<number[]>([]);
-  const [savedIds, setSavedIds] = useState<number[]>([]);
-  const [doneIds, setDoneIds] = useState<number[]>([]);
-  const [hydrated, setHydrated] = useState(false);
+  const initialState = useMemo(() => readStoredFitLogState(), []);
+  const [planIds, setPlanIds] = useState<number[]>(initialState.planIds);
+  const [savedIds, setSavedIds] = useState<number[]>(initialState.savedIds);
+  const [doneIds, setDoneIds] = useState<number[]>(initialState.doneIds);
+  const hydrated = true;
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-
-      if (stored) {
-        const parsed = JSON.parse(stored) as Partial<StoredFitLogState>;
-        setPlanIds(Array.isArray(parsed.planIds) ? parsed.planIds : []);
-        setSavedIds(Array.isArray(parsed.savedIds) ? parsed.savedIds : []);
-        setDoneIds(Array.isArray(parsed.doneIds) ? parsed.doneIds : []);
-      }
-    } catch (error) {
-      console.error("Could not restore FitLog data.", error);
-    } finally {
-      setHydrated(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-
     const state: StoredFitLogState = {
       planIds,
       savedIds,
@@ -69,7 +76,7 @@ export function FitLogProvider({ children }: { children: ReactNode }) {
     };
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [planIds, savedIds, doneIds, hydrated]);
+  }, [planIds, savedIds, doneIds]);
 
   const addToPlan = useCallback((id: number) => {
     if (planIds.includes(id) || planIds.length >= MAX_PLAN_ITEMS) {
