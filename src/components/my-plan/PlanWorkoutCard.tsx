@@ -59,7 +59,7 @@ export default function PlanWorkoutCard({ workout, mode }: PlanWorkoutCardProps)
   return (
     <article className={`card rounded-2xl border bg-base-200 p-3 transition ${done ? "border-fit-accent/30" : "border-fit-border"}`}>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <Link href={`/workout/${workout.id}`} className="relative block aspect-[4/3] shrink-0 overflow-hidden rounded-xl bg-black sm:w-40">
+        <Link href={`/workout/${workout.id}`} className="relative block aspect-4/3 shrink-0 overflow-hidden rounded-xl bg-black sm:w-40">
           <Image
             src={workout.image}
             alt={workout.name}
