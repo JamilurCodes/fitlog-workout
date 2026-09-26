@@ -1,0 +1,10 @@
+FitLog Assignment 06
+
+Source structure:
+src/app
+src/components
+src/lib
+src/types
+public
+
+Generated folders such as node_modules and .next are intentionally not included.
