@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: fitlog --default;
+}
+
+@plugin "daisyui/theme" {
+  name: "fitlog";
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: #1c1c1c;
+  --color-base-200: #252525;
+  --color-base-300: #3b3b3b;
+  --color-base-content: #ffffff;
+
+  --color-primary: #ccff00;
+  --color-primary-content: #000000;
+
+  --color-secondary: #2f2f2f;
+  --color-secondary-content: #ffffff;
+
+  --color-accent: #ccff00;
+  --color-accent-content: #000000;
+
+  --color-neutral: #161616;
+  --color-neutral-content: #ffffff;
+
+  --color-info: #7dd3fc;
+  --color-info-content: #0c1a22;
+
+  --color-success: #ccff00;
+  --color-success-content: #000000;
+
+  --color-warning: #facc15;
+  --color-warning-content: #1a1600;
+
+  --color-error: #f87171;
+  --color-error-content: #230707;
+
+  --radius-selector: 0.75rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1rem;
+  --border: 1px;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-oswald);
+
+  --color-fit-bg: #1c1c1c;
+  --color-fit-surface: #252525;
+  --color-fit-border: #3b3b3b;
+  --color-fit-muted: #9f9f9f;
+  --color-fit-accent: #ccff00;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #1c1c1c;
+}
+
+body {
+  min-height: 100vh;
+  background: #1c1c1c;
+  color: #ffffff;
+}
+
+::selection {
+  background: #ccff00;
+  color: #000000;
+}
+
+button,
+a,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.font-display {
+  font-family: var(--font-oswald), sans-serif;
+}
